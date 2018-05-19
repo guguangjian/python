@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+alary = []
+i = 0
+#\u5bfc\u5165sys\u6a21\u5757
+import sys
+
+#\u83b7\u53d6\u8f93\u5165
+def salary_calculator():
+    for argv in sys.argv[:1]:
+        try:
+            l = argv.split(':') #\u5c06\u8f93\u5165\u6309\u6761\u4ef6\u5207\u7247
+            num.append(int(l[0]))#\u5207\u7247\u540e\u7684\u5143\u7d20\u653e\u7f6e\u4e8e\u5bf9\u5e94\u7a7a\u5217\u8868
+            salary.append(int(l[1]))
+        except:
+            print("Parameter Error")
+
+#\u8ba1\u7b97\u4e3b\u4f53
+#\u7528\u4e8e\u904d\u5386\u5de5\u53f7\u548c\u5de5\u8d44
+    for i in range(len(salary)):
+        m = salary[i]
+        if m > 3500:
+            salary_get = m * 0.835 - 3500
+            if salary_get > 80000:
+                cal_salary = m * 0.835-(salary_get * 0.45 - 13505)
+            elif salary_get > 55000:
+                cal_salary = m * 0.835-(salary_get * 0.35 - 5505)
+            elif salary_get > 35000:
+                cal_salary = m * 0.835-(salary_get * 0.3 - 2755）
+            elif salary_get > 9000:
+                cal_salary = m * 0.835-(salary_get * 0.25 - 1005)
+            elif salary_get > 4500:
+                cal_salary = m * 0.835-(salary_get * 0.2 - 555)
+            elif salary_get > 1500:
+                cal_salary = m * 0.835-(salary_get * 0.1 - 105)
+            else:
+                cal_salary = m * 0.835-(salary_get * 0.03)
+        else:
+            cal_salary = m * 0.835
+        print("{}:{:.2f}".format(num[i],cal_salary))
+salary_calculator()
