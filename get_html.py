@@ -2,37 +2,37 @@
 from selenium import webdriver
 import csv
 
-#ÍøÒ×ÔÆÒôÀÖ¸èµ¥µÚÒ»Ò³µÄurl
+#ç½‘æ˜“äº‘éŸ³ä¹æ­Œå•ç¬¬ä¸€é¡µçš„url
 url = 'http://music.163.com/#/discover/playlist/?order=hot&cat=%E5%85%A8%E9%83%A8&limit=35&offset=0'
 
-#ÓÃPhantomJS½Ó¿Ú´´½¨Ò»¸öSeleniumµÄWebDriver
+#ç”¨PhantomJSæ¥å£åˆ›å»ºä¸€ä¸ªSeleniumçš„WebDriver
 driver = webdriver.PhantomJS()
 
-#×¼±¸ºÃ´æ´¢¸èµ¥µÄCSVÎÄ¼ş
+#å‡†å¤‡å¥½å­˜å‚¨æ­Œå•çš„CSVæ–‡ä»¶
 csv_file = open("playlist.csv", "w", newline='')
 writer = csv.writer(csv_file)
-vriter.writerow(['title', 'number', 'site'])
+writer.writerow(['title', 'number', 'site'])
 
-#½âÎöÃ¿Ò»Ò³£¬Ö±µ½ÏÂÒ»Ò³Îª¿Õ
+#è§£ææ¯ä¸€é¡µï¼Œç›´åˆ°ä¸‹ä¸€é¡µä¸ºç©º
 while url != 'javascript:void(0)':
-    #ÓÃWebDriver¼ÓÔØÒ³Ãæ
+    #ç”¨WebDriveråŠ è½½é¡µé¢
     driver.get(url)
-    #ÇĞ»»µ½ÄÚÈİµÄiframe
-    driver.swith_to.frame("contentFrame")
-    #¶¨Î»¸èµ¥±êÇ©
+    #åˆ‡æ¢åˆ°å†…å®¹çš„iframe
+    driver.switch_to.frame("contentFrame")
+    #å®šä½æ­Œå•æ ‡ç­¾
     data = driver.find_element_by_id("m-pl-container").\
         find_elements_by_tag_name("li")
-    #½âÎöÃ¿Ò»Ò³ÖĞµÄ¸èµ¥
+    #è§£ææ¯ä¸€é¡µä¸­çš„æ­Œå•
     for i in range(len(data)):
-        #»ñÈ¡²¥·ÅÁ¿
+        #è·å–æ’­æ”¾é‡
         nb = data[i].find_element_by_class_name("nb").text
-        if "Íò" in nb and int(nb.split("Íò")[0]) > 500:
-            #»ñÈ¡²¥·ÅÊı´óÓÚ500ÍòµÄ¸èµ¥µÄ·âÃæ
+        if "ä¸‡" in nb and int(nb.split("ä¸‡")[0]) > 500:
+            #è·å–æ’­æ”¾æ•°å¤§äº500ä¸‡çš„æ­Œå•çš„å°é¢
             msk = data[i].find_element_by_css_selector("a.msk")
-            #°Ñ·âÃæÉÏµÄ±êÌâºÍÁ´½ÓÁ¬Í¬²¥·ÅÊıÒ»ÆğĞ´µ½ÎÄ¼şÖĞ
+            #æŠŠå°é¢ä¸Šçš„æ ‡é¢˜å’Œé“¾æ¥è¿åŒæ’­æ”¾æ•°ä¸€èµ·å†™åˆ°æ–‡ä»¶ä¸­
             writer.writerow([msk.get_attribute('title'),
                              nb, msk.get_attribute('href')])
-    #¶¨Î»ÏÂÒ»Ò³µÄurl
+    #å®šä½ä¸‹ä¸€é¡µçš„url
     url = driver.find_element_by_css_selector("a.zbtn.znxt").\
         get_attribute('href')
 csv_file.close()
